@@ -4,11 +4,13 @@ import (
 	"encoding/xml"
 	"fmt"
 	"io"
-	"net/http"
+    "io/ioutil"
+    "net/http"
 	"net/url"
 	"os"
+    "strings"
 
-	"golang.org/x/net/html/charset"
+    "golang.org/x/net/html/charset"
 )
 
 type wsdlDefinitions struct {
@@ -160,7 +162,8 @@ type xsdMaxInclusive struct {
 func getWsdlBody(u string, c *http.Client) (reader io.ReadCloser, err error) {
 	parse, err := url.Parse(u)
 	if err != nil {
-		return nil, err
+        // if url.Parse fail, assume u contains the WSDL definition itself
+        return ioutil.NopCloser(strings.NewReader(u)), nil
 	}
 	if parse.Scheme == "file" {
 		outFile, err := os.Open(parse.Path)

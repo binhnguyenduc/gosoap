@@ -1,19 +1,18 @@
 package gosoap
 
 import (
-	"bytes"
-	"encoding/xml"
-	"errors"
-	"fmt"
-	"io/ioutil"
-	"net/http"
-	"net/http/httputil"
-	"net/url"
-	"strings"
-	"sync"
-	"time"
+    "bytes"
+    "encoding/xml"
+    "errors"
+    "fmt"
+    "io/ioutil"
+    "net/http"
+    "net/http/httputil"
+    "strings"
+    "sync"
+    "time"
 
-	"golang.org/x/net/html/charset"
+    "golang.org/x/net/html/charset"
 )
 
 type SoapParams interface{}
@@ -54,10 +53,11 @@ func SoapClient(wsdl string, httpClient *http.Client) (*Client, error) {
 
 // SoapClientWithConfig return new *Client to handle the requests with the WSDL
 func SoapClientWithConfig(wsdl string, httpClient *http.Client, config *Config) (*Client, error) {
-	_, err := url.Parse(wsdl)
-	if err != nil {
-		return nil, err
-	}
+    // remove this to enable passing wsdl definitions directly via string
+	// _, err := url.Parse(wsdl)
+	// if err != nil {
+	// 	return nil, err
+	// }
 
 	if httpClient == nil {
 		httpClient = &http.Client{}
